@@ -113,4 +113,36 @@ ignoreboth находим следующим образом: man bash -> / -> в
 -d file
               True if file exists and is a directory.
 ```
-9. 
+9. Для добавления нового пути в $PATH при вызове команды type -a bash изменим файл .profile, добавив туда по аналогии строку 
+```
+# new_path_directory
+PATH="/tmp/new_path_directory:$PATH"
+```
+Увидим, что переменная $PATH поменялась.
+```
+vagrant@vagrant:~$ echo $PATH
+/tmp/new_path_directory:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+ ```
+Далее создадим каталог /tmp/new_path_directory и скопируем двоичный файл bash туда 
+```
+vagrant@vagrant:/tmp$ mkdir new_path_directory
+vagrant@vagrant:/tmp$ cd new_path_directory
+vagrant@vagrant:/tmp/new_path_directory$ cp /usr/bin/bash /tmp/new_path_directory
+```
+
+Запустим команду type -a bash
+
+```
+vagrant@vagrant:/tmp/new_path_directory$ type -a bash
+bash is /tmp/new_path_directory/bash
+bash is /usr/bin/bash
+bash is /bin/bash
+ ```
+
+10. Команда AT запланиует в заданный день\время команду и выполнит ее, команда batch выполнит задание, когда средней уровень 
+загруженности системы будет ниже определенного значения.
+Ниже справка
+```
+ at and batch read commands from standard input or a specified file which are to be executed at a later time, using /bin/sh
+ batch   executes commands when system load levels permit; in other words, when the load average drops below 1.5, or the value specified in the invocation of atd.
+ ```
